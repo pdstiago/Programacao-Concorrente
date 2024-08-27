@@ -1,8 +1,8 @@
 Abaixo seguem os casos que foram testados variando em N e nthreads.
 
-É possível perceber que em nenhum dos casos, mesmo aqueles com N muito grande, como 10^6, houve uma variação relativa diferente de 0.
+É possível perceber que em nenhum dos casos, mesmo aqueles com N muito grande, como 10^6, houve uma variação relativa diferente de 0, mostrando que o método concorrente pode ser uma excelente alternativa.
 Segundo a professora isso acontece, pois o tipo double utilizado para guardar os produtos internos, possui uma precisão muito grande, e muito melhor que a do float.
-E assim, os produtos calculados pelas duas formas acabam sendo os mesmos pelos menos em muitas casas decimais.
+E assim, apesar de que a ordem que calculamos os produtos sejam diferentes nos dois métodos, e isso poderia gerar uma diferença de precisão, devido ao double, esse problema é amenizado, e os produtos calculados pelas duas formas acabam sendo os mesmos pelos menos em muitas casas decimais.
 Uma outra observação é que calcular o produto interno com um número menor de threads acaba sendo mais rápido, do que calculá-lo com um número maior.
 
 N = 100:
