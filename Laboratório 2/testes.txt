@@ -1,0 +1,48 @@
+Abaixo seguem os casos que foram testados variando em N e nthreads.
+
+É possível perceber que em nenhum dos casos, mesmo aqueles com N muito grande, como 10^6, houve uma variação relativa diferente de 0.
+Segundo a professora isso acontece, pois o tipo double utilizado para guardar os produtos internos, possui uma precisão muito grande, e muito melhor que a do float.
+E assim, os produtos calculados pelas duas formas acabam sendo os mesmos pelos menos em muitas casas decimais.
+Uma outra observação é que calcular o produto interno com um número menor de threads acaba sendo mais rápido, do que calculá-lo com um número maior.
+
+N = 100:
+    nthreads = 4:
+        Produto interno Concorrente = 842093.09539794921875000000000000
+        Produto interno Sequencial = 842093.09539794921875000000000000
+        Variação relativa = 0.00000000000000000000000000
+    nthreads = 26:
+        Produto interno Concorrente = 842093.09539794921875000000000000
+        Produto interno Sequencial = 842093.09539794921875000000000000
+        Variação relativa = 0.00000000000000000000000000
+    nthreads = 89:
+        Produto interno Concorrente = 842093.09539794921875000000000000
+        Produto interno Sequencial = 842093.09539794921875000000000000
+        Variação relativa = 0.0000000000000000000000000
+
+N = 10000:
+    nthreads = 101:
+        Produto interno Concorrente = -8519317.98591995239257812500000000
+        Produto interno Sequencial = -8519317.98591995239257812500000000
+        Variação relativa = 0.00000000000000000000000000
+    nthreads = 1246:
+        Produto interno Concorrente = -8519317.98591995239257812500000000
+        Produto interno Sequencial = -8519317.98591995239257812500000000
+        Variação relativa = 0.00000000000000000000000000
+    nthreads = 8000:
+        Produto interno Concorrente = -8519317.98591995239257812500000000
+        Produto interno Sequencial = -8519317.98591995239257812500000000
+        Variação relativa = 0.00000000000000000000000000
+
+N = 1000000:
+    nthreads = 9679:
+        Produto interno Concorrente = -5130461.13723160326480865478515625
+        Produto interno Sequencial = -5130461.13723160326480865478515625
+        Variação relativa = 0.00000000000000000000000000
+    nthreads = 25999:
+        Produto interno Concorrente = -5130461.13723160326480865478515625
+        Produto interno Sequencial = -5130461.13723160326480865478515625
+        Variação relativa = 0.00000000000000000000000000
+    nthreads = 100000:
+        Produto interno Concorrente = -5130461.13723160326480865478515625
+        Produto interno Sequencial = -5130461.13723160326480865478515625
+        Variação relativa = 0.00000000000000000000000000
