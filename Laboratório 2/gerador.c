@@ -25,12 +25,12 @@ int main(int argc, char*argv[]){
     float *vetorA; // vetor A que será gerado
     float *vetorB; // vetor B que será gerado
     float elem; // valor gerado para incluir no vetor
-    double prodInter = 0; // soma total dos elementos gerados
+    double prodInter = 0; // produto interno dos elementos gerados
 
-    FILE * descritorArquivo; // descritor do arquivo de saida
+    FILE * descritorArquivo; // descritor do arquivo de saída
     size_t ret; // retorno da função de escrita no arquivo de saída
 
-    //recebe os argumentos de entrada
+    // recebe os argumentos de entrada
     if(argc<3){
         fprintf(stderr, "Digite: %s <dimensão> <arquivo saída>\n", argv[0]);
         return 1;
@@ -38,21 +38,21 @@ int main(int argc, char*argv[]){
 
     n = atoi(argv[1]);
 
-    //aloca memória para o vetorA
+    // aloca memória para o vetorA
     vetorA = (float*)malloc(sizeof(float)*n);
     if(!vetorA){
         fprintf(stderr, "Erro de alocação da memória do vetor A\n");
         return 2;
     }
 
-    //aloca memória para o vetorB
+    // aloca memória para o vetorB
     vetorB = (float*)malloc(sizeof(float)*n);
     if(!vetorB){
         fprintf(stderr, "Erro de alocação da memória do vetor B\n");
         return 2;
     }
 
-    //preenche o vetorA com valores float aleatórios
+    // preenche o vetorA com valores float aleatórios
     srand(time(NULL));
     for(int i=0; i<n; i++){
         int isNeg = rand()%2; // indica se o número vai ser negativo ou não com 50% de chance
@@ -65,7 +65,7 @@ int main(int argc, char*argv[]){
         vetorA[i] = elem;
     }
 
-    //preenche o vetorB com valores float aleatórios
+    // preenche o vetorB com valores float aleatórios
     for(int i=0; i<n; i++){
         int isNeg = (rand()%2); // indica se o número vai ser negativo ou não com 50% de chance
         fator = 1;
@@ -88,7 +88,7 @@ int main(int argc, char*argv[]){
         return 3;
     }
 
-    //imprimir na saida padrao o vetor gerado
+    // imprimir na saída padrão os vetores gerados e o produto interno
     #ifdef TEXTO
     fprintf(stdout, "%d\n", n);
     for(int i=0; i<n; i++) {
