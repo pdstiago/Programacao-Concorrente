@@ -33,10 +33,10 @@ cada thread irá realizar o produto interno de (N / nThreads) posições consecu
 "range" = N / nThreads
 
 Então, a thread de id 0 irá multiplicar as primeiras "range" posições, a de id 1, as próximas "range" posições e assim por diante...
-então se tivéssemos M = 3 e N = 9, teríamos, 0 0 0 1 1 1 2 2 2, em que o número na posição indica a thread que multiplicou os valores daquelas posições
+então se tivéssemos M = 3 e N = 9, teríamos, 0 0 0 1 1 1 2 2 2, em que o número na posição indica a thread que multiplicou os valores daquela posição
 
 porém se resto>0, então vão sobrar posições no final que não serão calculadas, sendo assim,
-as últimas "resto" posições serão multiplicadas pelas thread de id 0 até resto-1, respectivamente.
+as últimas "resto" posições serão multiplicadas pelas threads de id 0 até resto-1, respectivamente.
 então se tivéssemos M = 3 e N = 8, teríamos, 0 0 1 1 2 2 0 1, em que o número na posição indica a thread que multiplicou os valores daquela posição
 */
 
@@ -55,7 +55,7 @@ void *calculaProduto(void *tid){
 
     if(resto>0 && id<=resto-1){ // se houver resto, e o indice atual é um daqueles que realizará a modificação, então posResto será a i-ésima posição que sobrou
         
-        int posResto = nthreads * range + id; // qual das "resto" posições finais aquela thread vai modificar
+        int posResto = nthreads * range + id; // qual das "resto" posições finais aquela thread vai multiplicar
 
         prodLocal += vetorA[posResto] * vetorB[posResto]; // multiplico uma das posições que sobraram do final
     }
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
 
     vetorB = malloc(sizeof(float)*n);
     if(vetorB==NULL) { printf("--ERRO: malloc()\n"); exit(-1); }
-    
+
     ret = fread(vetorB, sizeof(float), n, arq);
     if(ret<n){
         fprintf(stderr, "Erro de leitura dos elementos do vetorB\n");
@@ -117,7 +117,7 @@ int main(int argc, char *argv[]){
     // le o número de threads da entrada do usúario 
     nthreads = atoi(argv[2]);
 
-    // limita o número de threads ao tamanho do vetor
+    // limita o número de threads ao tamanho dos vetores
     if(nthreads>n) nthreads = n;
 
     // aloca espaço para o vetor de identificadores das threads no sistema
@@ -131,6 +131,7 @@ int main(int argc, char *argv[]){
         }
     }
 
+    // espera todas as threads terminarem e soma o produto calculado por elas no produto total
     for(int i=0; i<nthreads; i++){
         if(pthread_join(tid_sistema[i], (void*) &prodThread)){
             printf("--ERRO: pthread_join()\n"); exit(-1);
@@ -141,17 +142,17 @@ int main(int argc, char *argv[]){
 
     double var = abs((prodSenq - prodConc) / prodSenq);
 
-    //imprime os resultados
+    // imprime os resultados
     printf("Produto interno Concorrente = %.26lf\n", prodConc);
     printf("Produto interno Sequencial = %.26lf\n", prodSenq);
     printf("Variação relativa = %.26lf\n", var);
 
-    //desaloca os espacos de memoria
+    // desaloca os espacos de memória
     free(vetorA);
     free(vetorB);
     free(tid_sistema);
 
-    //fecha o arquivo
+    // fecha o arquivo
     fclose(arq);
     return 0;
 }
