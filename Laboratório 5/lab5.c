@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
     tid = (pthread_t*) malloc(sizeof(pthread_t)*(nthreads+1));
     if(tid==NULL) {puts("ERRO--malloc"); return 2;}
 
-    //--inicilaiza o mutex (lock de exclusao mutua)
+    //--inicializa o mutex (lock de exclusao mutua)
     pthread_mutex_init(&mutex, NULL);
 
     //--inicializa as condições
