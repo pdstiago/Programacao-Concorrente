@@ -10,6 +10,7 @@ gcc -o lab6 lab6.c list_int.c -Wall
 
 #### Parte do primeiro log com 5 threads:
 Thread 1 está escrevendo
+
 Fila de leitura: list = 
 Fila de escrita: list = 
 
