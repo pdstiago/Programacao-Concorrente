@@ -12,49 +12,81 @@ gcc -o lab6 lab6.c list_int.c -Wall
 Thread 1 está escrevendo
 
 Fila de leitura: list = 
+
 Fila de escrita: list = 
 
+
 Thread 4 está esperando para escrever
+
 Fila de leitura: list = 
+
 Fila de escrita: list = 4 
 
+
 Thread 0 está esperando para escrever
+
 Fila de leitura: list = 
+
 Fila de escrita: list = 0 4 
 
+
 Thread 3 está esperando para ler
+
 Fila de leitura: list = 3 
+
 Fila de escrita: list = 0 4 
+
 
 Thread 1 parou de escrever
 
+
 Thread 1 está esperando para ler
+
 Fila de leitura: list = 1 3 
+
 Fila de escrita: list = 0 4 
 
+
 Thread 0 está escrevendo
+
 Fila de leitura: list = 1 3 
+
 Fila de escrita: list = 4 
+
 
 Thread 0 parou de escrever
 
+
 Thread 0 está esperando para ler
+
 Fila de leitura: list = 0 1 3 
+
 Fila de escrita: list = 4 
+
 
 Thread 2 está esperando para ler
+
 Fila de leitura: list = 0 1 2 3 
+
 Fila de escrita: list = 4 
 
+
 Thread 4 está escrevendo
+
 Fila de leitura: list = 0 1 2 3 
+
 Fila de escrita: list = 
+
 
 Thread 4 parou de escrever
 
+
 Thread 4 está lendo
+
 Fila de leitura: list = 0 1 2 3 
+
 Fila de escrita: list = 
+
 
 Thread 4 parou de ler
 
