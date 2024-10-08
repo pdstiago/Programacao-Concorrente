@@ -17,7 +17,7 @@ Thread 2 está lendo\
 Fila de leitura: list = \
 Fila de escrita: list = 
 
-Thread 2 parou de ler\
+Thread 2 parou de ler
 
 Thread 2 está esperando para escrever\
 Fila de leitura: list = \
