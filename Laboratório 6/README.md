@@ -9,10 +9,10 @@ gcc -o lab6 lab6.c list_int.c -Wall
 ### Demonstrações da prioridade de escrita:
 
 #### Parte do primeiro log com 5 threads:
-Thread 0 está lendo
-Fila de leitura: list = 
-Fila de escrita: list = 
-
+Thread 0 está lendo\
+Fila de leitura: list = \
+Fila de escrita: list = \
+\
 Thread 2 está lendo
 Fila de leitura: list = 
 Fila de escrita: list = 
