@@ -11,69 +11,69 @@ gcc -o lab6 lab6.c list_int.c -Wall
 #### Parte do primeiro log com 5 threads:
 Thread 0 está lendo\
 Fila de leitura: list = \
-Fila de escrita: list = \
+Fila de escrita: list = 
 
 Thread 2 está lendo\
 Fila de leitura: list = \
-Fila de escrita: list = \
+Fila de escrita: list = 
 
 Thread 2 parou de ler\
 
 Thread 2 está esperando para escrever\
 Fila de leitura: list = \
-Fila de escrita: list = 2 \
+Fila de escrita: list = 2 
 
 Thread 1 está esperando para escrever\
 Fila de leitura: list = \
-Fila de escrita: list = 1 2 \
+Fila de escrita: list = 1 2 
 
 Thread 3 está esperando para ler\
 Fila de leitura: list = 3 \
-Fila de escrita: list = 1 2 \
+Fila de escrita: list = 1 2 
 
-Thread 0 parou de ler\
+Thread 0 parou de ler
 
 Thread 0 está esperando para ler\
 Fila de leitura: list = 0 3 \
-Fila de escrita: list = 1 2 \
+Fila de escrita: list = 1 2 
 
 Thread 2 está escrevendo\
 Fila de leitura: list = 0 3 \
-Fila de escrita: list = 1 \
+Fila de escrita: list = 1 
 
-Thread 2 parou de escrever\
+Thread 2 parou de escrever
 
 Thread 2 está esperando para ler\
 Fila de leitura: list = 0 2 3 \
-Fila de escrita: list = 1 \
+Fila de escrita: list = 1 
 
 Thread 1 está escrevendo\
 Fila de leitura: list = 0 2 3 \
-Fila de escrita: list = \
+Fila de escrita: list = 
 
-Thread 1 parou de escrever\
+Thread 1 parou de escrever
 
 Thread 1 está lendo\
 Fila de leitura: list = 0 2 3 \
-Fila de escrita: list = \
+Fila de escrita: list = 
 
-Thread 1 parou de ler\
-
-Thread 2 está lendo\
-Fila de leitura: list = 0 3 \
-Fila de escrita: list = \
-
-Thread 2 parou de ler\
+Thread 1 parou de ler
 
 Thread 2 está lendo\
 Fila de leitura: list = 0 3 \
-Fila de escrita: list = \
+Fila de escrita: list = 
+
+Thread 2 parou de ler
+
+Thread 2 está lendo\
+Fila de leitura: list = 0 3 \
+Fila de escrita: list = 
 
 Thread 0 está lendo\
 Fila de leitura: list = 3 \
-Fila de escrita: list = \
+Fila de escrita: list = 
 
-Thread 0 parou de ler\
+Thread 0 parou de ler
 
 #### Parte do terceiro log com 5 threads:
 Thread 4 está escrevendo
