@@ -10,23 +10,23 @@
 #define MAX_VALUE 100 //valor maximo a ser inserido
 
 //lista compartilhada iniciada 
-struct list_node_s *head_p = NULL, *head_lei = NULL, *head_esq = NULL;
+struct list_node_s *head_p = NULL, *head_lei = NULL, *head_esc = NULL;
 //qtde de threads no programa
 int nthreads;
 
 //lock de exclusao mutua
 pthread_mutex_t mutex;
 
-pthread_cond_t cond;
+pthread_cond_t liberaEscrita, liberaLeitura;
 
-int lei, esq, esqEsperando;
+int lei, esc, escEsperando;
 
 void printarFilas(){
     printf("Fila de leitura: ");
     Print(head_lei);
 
     printf("Fila de escrita: ");
-    Print(head_esq);
+    Print(head_esc);
 
     printf("\n");
 }
@@ -35,14 +35,14 @@ void entraLeitura(int id){
     pthread_mutex_lock(&mutex);
 
     int entrou = 0;
-    while(esq || esqEsperando){
+    while(esc || escEsperando){
         if(!entrou){
             printf("Thread %d está esperando para ler\n", id);
             Insert(id, &head_lei);
             printarFilas();
             entrou = 1;
         }
-        pthread_cond_wait(&cond, &mutex);
+        pthread_cond_wait(&liberaLeitura, &mutex);
     }
 
     if(entrou) Delete(id, &head_lei);
@@ -59,6 +59,7 @@ void saiLeitura(int id){
     pthread_mutex_lock(&mutex);
     printf("Thread %d parou de ler\n\n", id);
     lei--;
+    if(!lei) pthread_cond_broadcast(&liberaEscrita);
     pthread_mutex_unlock(&mutex);
 }
 
@@ -67,26 +68,26 @@ void entraEscrita(int id){
 
     int entrou = 0;
 
-    while(esq){
+    while(esc || lei){
         if(!entrou){
-            esqEsperando++;
+            escEsperando++;
             entrou = 1;
-            Insert(id, &head_esq);
+            Insert(id, &head_esc);
             printf("Thread %d está esperando para escrever\n", id);
             printarFilas();
         }
-        pthread_cond_wait(&cond, &mutex);
+        pthread_cond_wait(&liberaEscrita, &mutex);
     }
 
     if(entrou){
-        Delete(id, &head_esq);
-        esqEsperando--;
+        Delete(id, &head_esc);
+        escEsperando--;
     }
 
     printf("Thread %d está escrevendo\n", id);
     printarFilas();
 
-    esq++;
+    esc++;
 
     pthread_mutex_unlock(&mutex);
 }
@@ -96,9 +97,11 @@ void saiEscrita(int id){
 
     printf("Thread %d parou de escrever\n\n", id);
 
-    esq--;
+    esc--;
 
-    pthread_cond_broadcast(&cond);
+    if(!escEsperando) pthread_cond_broadcast(&liberaLeitura);
+
+    pthread_cond_broadcast(&liberaEscrita);
 
     pthread_mutex_unlock(&mutex);
 }
@@ -158,7 +161,8 @@ int main(int argc, char* argv[]) {
 
     //inicializa a variavel mutex
     pthread_mutex_init(&mutex, NULL);
-    pthread_cond_init(&cond, NULL);
+    pthread_cond_init(&liberaLeitura, NULL);
+    pthread_cond_init(&liberaEscrita, NULL);
     
     //cria as threads
     for(long int i=0; i<nthreads; i++) {
@@ -176,13 +180,14 @@ int main(int argc, char* argv[]) {
 
     //libera o mutex
     pthread_mutex_destroy(&mutex);
-    pthread_cond_destroy(&cond);
+    pthread_cond_destroy(&liberaLeitura);
+    pthread_cond_destroy(&liberaEscrita);
     //libera o espaco de memoria do vetor de threads
     free(tid);
     //libera o espaco de memoria da lista
     Free_list(&head_p);
     Free_list(&head_lei);
-    Free_list(&head_esq);
+    Free_list(&head_esc);
 
     return 0;
 }  /* main */
