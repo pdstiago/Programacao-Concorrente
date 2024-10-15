@@ -16,54 +16,54 @@ sem_t jaImprimiu, jaProcessou, podeProcessar;     //semaforos para coordenar a o
 
 int N, posBuffer1, posBuffer2;
 
-int n, cont, total, impressos, pos;
+int n, cont, acabou;
 
-char *buffer1, *buffer2, *entrada;
+char *buffer1, *buffer2;
 
 //funcao executada pela thread 1
 void *t1 (void *arg) {
-    while(impressos<total){
+    while(1){   
         sem_wait(&jaImprimiu);
-        
-        while(pos<total && posBuffer1<N){
-            printf("%c\n", entrada[pos]);
-            buffer1[posBuffer1++] = entrada[pos++];
+ 
+        char c;
+        while(posBuffer1<N && (c = fgetc(fileEntrada)) != EOF){
+            buffer1[posBuffer1++] = c;
         }
 
-        printf("hear %d\n", posBuffer1);
+        if(c == EOF) acabou = 1;
 
         sem_post(&podeProcessar);
+
+        if(c == EOF) break;
     }
-    printf("acabei 1\n");
+
     pthread_exit(NULL);
 }
 
 //funcao executada pela thread 2
 void *t2 (void *arg) {
-    while(impressos<total){
+    while(1){
         sem_wait(&podeProcessar);
-
-        printf("aqui %d\n", posBuffer1);
 
         for(int i=0; i<posBuffer1; i++){
             buffer2[posBuffer2++] = buffer1[i];
             cont++;
 
-            if(n==10){
+            if(n == 11){
                 if(cont == 10){
                     buffer2[posBuffer2++]='\n';
                     cont = 0;
                 }
-            }else if (cont == 2*n+1){
+            }else if(cont == 2*n+1){
                 buffer2[posBuffer2++]='\n';
                 cont = 0;
-                if(n<10) n++;
+                if(n<=10) n++;
             }
         }
-
-        printf("aqui 2 %d\n", posBuffer2);
-
         sem_post(&jaProcessou);
+
+        if(acabou) break;
+
     }
 
     pthread_exit(NULL);
@@ -71,19 +71,18 @@ void *t2 (void *arg) {
 
 //funcao executada pela thread 3
 void *t3 (void *arg) {
-    while(impressos<total){
+    while(1){
         sem_wait(&jaProcessou);
 
-        printf("ue\n");
-
         for(int i=0; i<posBuffer2; i++){
-            if(buffer2[i]!='\n') impressos++;
             fprintf(fileSaida, "%c", buffer2[i]);
         }
-
+        
         posBuffer1 = posBuffer2 = 0;
 
         sem_post(&jaImprimiu);
+
+        if(acabou) break;
     }
 
     pthread_exit(NULL);
@@ -116,20 +115,6 @@ int main(int argc, char *argv[]) {
     }
     if(!fileSaida){
         printf("--ERRO: não é possível escrever no arquivo\n"); exit(-1);
-    }
-
-    char c;
-    while((c = fgetc(fileEntrada)) != EOF){
-        total++;
-    }
-
-    entrada = (char*)malloc(sizeof(char)*total);
-
-    rewind(fileEntrada);
-
-    int pos = 0;
-    while((c = fgetc(fileEntrada)) != EOF){
-        entrada[pos++] = c;
     }
 
     //inicia os semaforos
