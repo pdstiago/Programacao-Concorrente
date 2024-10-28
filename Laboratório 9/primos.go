@@ -13,7 +13,7 @@ import (
 )
 
 func ehPrimo(n int) int {
-	if n<=1 {
+	if n <= 1 {
 		return 0
 	}
 	if n == 2 {
@@ -22,7 +22,7 @@ func ehPrimo(n int) int {
 	if n%2 == 0 {
 		return 0
 	}
-	for i:=3; i<int(math.Sqrt(float64(n)))+1; i+=2 {
+	for i := 3; i < int(math.Sqrt(float64(n)))+1; i += 2 {
 		if n%i == 0 {
 			return 0
 		}
@@ -47,7 +47,7 @@ func main() {
 	numeros := make(chan int, N)
 	resultadosEhPrimo := make(chan int, N)
 
-	for i:=0; i<M; i++ {
+	for i := 0; i < M; i++ {
 		go func() {
 			for {
 				j, more := <-numeros
@@ -59,14 +59,14 @@ func main() {
 		}()
 	}
 
-	for i:=1; i<=N; i++ {
-		numeros<-i
+	for i := 1; i <= N; i++ {
+		numeros <- i
 	}
 	close(numeros)
 
-	primos:=0
+	primos := 0
 
-	for i:=1; i<=N; i++ {
+	for i := 1; i <= N; i++ {
 		primos += <-resultadosEhPrimo
 	}
 

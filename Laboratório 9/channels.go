@@ -26,22 +26,20 @@ func tarefa(str chan string) {
 
 func main() {
 	var msg = "" //string vazia
-	
+
 	//cria um canal de comunicacao nao-bufferizado
 	str := make(chan string)
-	
+
 	//cria um goroutine que executará a função 'tarefa'
 	go tarefa(str)
-	
+
 	str <- "Olá, Goroutine, bom dia!"
 	msg = <-str
 	fmt.Println(msg, "(impresso pela Main)")
-	
 
 	str <- "Tudo bem! Vou terminar tá?"
 	msg = <-str
 	fmt.Println(msg, "(impresso pela Main)")
-
 
 	str <- "finalizando"
 	msg = <-str
