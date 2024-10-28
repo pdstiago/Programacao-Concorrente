@@ -1,4 +1,9 @@
 //introduz canais na aplicação Go
+
+/*
+	Executar: go run channels.go
+*/
+
 package main
 
 import (

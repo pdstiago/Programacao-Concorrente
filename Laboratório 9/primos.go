@@ -1,3 +1,8 @@
+/*
+	Compilar: go build primos.go
+	Executar: ./primos <N> <M>
+*/
+
 package main
 
 import (
@@ -39,7 +44,7 @@ func main() {
 		os.Exit(1)
 	}
 
-    numeros := make(chan int, N)
+	numeros := make(chan int, N)
 	resultadosEhPrimo := make(chan int, N)
 
 	for i:=0; i<M; i++ {
@@ -59,7 +64,7 @@ func main() {
 	}
 	close(numeros)
 
-    primos:=0
+	primos:=0
 
 	for i:=1; i<=N; i++ {
 		primos += <-resultadosEhPrimo
