@@ -1,7 +1,7 @@
 //introduz canais na aplicação Go
 
 /*
-	Executar: go run channels.go
+Executar: go run channels.go
 */
 
 package main
