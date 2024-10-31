@@ -45,17 +45,19 @@ func main() {
 	}
 
 	numeros := make(chan int, N)
-	resultadosEhPrimo := make(chan int, N)
+	resultadosEhPrimo := make(chan int, M)
 
 	for i := 0; i < M; i++ {
 		go func() {
+			cont := 0
 			for {
 				j, more := <-numeros
 				if !more {
-					return
+					break
 				}
-				resultadosEhPrimo <- ehPrimo(j)
+				cont += ehPrimo(j)
 			}
+			resultadosEhPrimo <- cont
 		}()
 	}
 
@@ -66,7 +68,7 @@ func main() {
 
 	primos := 0
 
-	for i := 1; i <= N; i++ {
+	for i := 1; i <= M; i++ {
 		primos += <-resultadosEhPrimo
 	}
 
